@@ -29,7 +29,8 @@ buildscript {
           appcompat: "androidx.appcompat:appcompat:1.2.0",
           constraintLayout: "androidx.constraintlayout:constraintlayout:2.0.1",
       ],
-      leakcanary: 'com.squareup.leakcanary:leakcanary-android:2.4'
+      leakcanary: 'com.squareup.leakcanary:leakcanary-android:2.4',
+      mavenGradle: "com.github.dcendents:android-maven-gradle-plugin:2.0"
   ]
   repositories {
     google()
@@ -38,6 +39,7 @@ buildscript {
   dependencies {
     classpath deps.androidPlugin
     classpath deps.kotlin.plugin
+    classpath deps.mavenGradle
   }
 }
 
