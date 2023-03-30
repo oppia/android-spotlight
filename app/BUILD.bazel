@@ -1,5 +1,19 @@
 load("@io_bazel_rules_kotlin//kotlin:android.bzl", "kt_android_library")
 load("@rules_jvm_external//:defs.bzl", "artifact")
+# Configuration options
+option_setting(
+    name = "build_variant",
+    type = "string",
+    default = "debug",
+    values = ["debug", "release"],
+)
+
+option_setting(
+    name = "enable_lint_checks",
+    type = "boolean",
+    default = True,
+)
+
 
 kt_android_library(
     name = "spotlightsample",
@@ -29,3 +43,27 @@ android_binary(
         ":spotlightsample",
     ],
 )
+# Test targets
+android_test(
+    name = "unit_tests",
+    srcs = glob(["src/test/**/*.java", "src/test/**/*.kt"]),
+    manifest = "src/test/AndroidManifest.xml",
+    deps = [
+        ":spotlightsample",
+        artifact("androidx.test:core"),
+        artifact("androidx.test:runner"),
+        artifact("androidx.test.ext:junit"),
+        artifact("org.mockito:mockito-core"),
+    ],
+)
+
+android_test(
+    name = "instrumentation_tests",
+    srcs = glob(["src/androidTest/**/*.java", "src/androidTest/**/*.kt"]),
+    manifest = "src/androidTest/AndroidManifest.xml",
+    deps = [
+        ":spotlightsample",
+        artifact("androidx.test.espresso:espresso-core"),
+    ],
+)
+
